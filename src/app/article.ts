@@ -1,12 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const key = import.meta.env.VITE_RAPID_API_ARTICLE_KEY;
+// const key = import.meta.env.VITE_RAPID_API_ARTICLE_KEY;
 
 export const summrizerApi = createApi({
   reducerPath: "summrizerApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://article-extractor-and-summarizer.p.rapidapi.com",
     prepareHeaders: (headers) => {
-      headers.set("x-rapidapi-key", key);
+      headers.set(
+        "x-rapidapi-key",
+        "0af433e7d5msh3bee3e87d277141p144a15jsn526b16dcc73e"
+      );
 
       headers.set(
         "x-rapidapi-host",

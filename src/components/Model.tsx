@@ -28,8 +28,6 @@ const Model = () => {
     };
     try {
       const { data } = await getSummarizedArticle(params);
-      console.log(isFetching);
-
       currentArticle.generatedArticle = data?.summary;
       setIsArticleChanged(currentArticle.generatedArticle);
     } catch (e) {
@@ -46,7 +44,6 @@ const Model = () => {
     const storedData = JSON.parse(String(localStorage.getItem("article")));
     storedData && setRecentArticles(storedData);
   }, [isArticleChanged]);
-  console.log(isFetching);
 
   return (
     <section className={"  text-center "}>
