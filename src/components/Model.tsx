@@ -127,7 +127,7 @@ const Model = () => {
       ))}
       <div>
         <div className="flex justify-center text-4xl text-red-700">
-          {true && <span>{"some thing went wrong, try again later "}</span>}
+          {error && <span>{"some thing went wrong, try again later "}</span>}
         </div>
         <div className="">
           {isFetching ? (
