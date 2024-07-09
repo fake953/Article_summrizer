@@ -7,7 +7,12 @@ const Hero = () => {
           <img src={logo} alt="" />
         </div>
         <div className="pt-2">
-          <span className="px-4 py-2 text-white bg-black border-black rounded-full cursor-pointer hover:border-2 hover:text-black hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50">
+          <span
+            onClick={() => {
+              open("https://github.com/fake953/Article_summrizer", "_blank");
+            }}
+            className="px-4 py-2 text-white bg-black border-black rounded-full cursor-pointer hover:border-2 hover:text-black hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50"
+          >
             GitHub
           </span>
         </div>
