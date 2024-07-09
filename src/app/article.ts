@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // const key = import.meta.env.VITE_RAPID_API_ARTICLE_KEY;
+import type { data, params } from "../types";
 
 export const summrizerApi = createApi({
   reducerPath: "summrizerApi",
@@ -19,7 +20,7 @@ export const summrizerApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getSummarizedArticle: builder.query({
+    getSummarizedArticle: builder.query<data, params>({
       query: (params) =>
         `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=3`,
     }),
