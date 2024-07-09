@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import linkIcon from "../assets/link.svg";
-import logo from "../assets/copy.svg";
-import loader from "../assets/loader.svg";
+import { tick, loader, linkIcon, copy } from "../assets";
 import React from "react";
-import { useLazyGetSummrizedArticleQuery } from "../app/article.ts";
+import { useLazyGetSummarizedArticleQuery } from "../app/article.ts";
 type currentArticleType = {
   URL: string;
   generatedArticle: string;
@@ -13,12 +11,13 @@ const Model = () => {
   const [recentArticles, setRecentArticles] = useState<currentArticleType[]>(
     []
   );
+  const [copied, setCopied] = useState<string>();
   const [currentArticle, setCurrentArticle] = useState<currentArticleType>({
     URL: "",
     generatedArticle: "",
   });
-  const [getSummrizedArticle, { error, isFetching }] =
-    useLazyGetSummrizedArticleQuery();
+  const [getSummarizedArticle, { error, isFetching }] =
+    useLazyGetSummarizedArticleQuery();
   const [articleUrl, setArticleUrl] = useState("");
   const handelSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,12 +27,12 @@ const Model = () => {
       articleUrl: currentArticle.URL,
     };
     try {
-      const { data } = await getSummrizedArticle(params);
+      const { data } = await getSummarizedArticle(params);
       console.log(isFetching);
 
-      currentArticle.generatedArticle = data.summary;
+      currentArticle.generatedArticle = data?.summary;
       setIsArticleChanged(currentArticle.generatedArticle);
-    } catch (error) {
+    } catch (e) {
       console.log(error);
     }
 
@@ -44,7 +43,7 @@ const Model = () => {
     setArticleUrl("");
   };
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("article"));
+    const storedData = JSON.parse(String(localStorage.getItem("article")));
     storedData && setRecentArticles(storedData);
   }, [isArticleChanged]);
   console.log(isFetching);
@@ -100,9 +99,11 @@ const Model = () => {
           >
             <img
               onClick={() => {
+                setCopied(data.URL);
                 navigator.clipboard.writeText(data.URL);
+                setTimeout(() => setCopied(""), 3000);
               }}
-              src={logo}
+              src={copied === data.URL ? tick : copy}
               alt="copy icon"
               className={"inline left-0 cursor-pointer pl-2 w-7"}
             />{" "}
@@ -125,13 +126,18 @@ const Model = () => {
         </div>
       ))}
       <div>
+        <div className="flex justify-center text-4xl text-red-700">
+          {true && <span>{"some thing went wrong, try again later "}</span>}
+        </div>
         <div className="">
           {isFetching ? (
-            <img
-              src={loader}
-              alt="loader component"
-              className="block text-center"
-            />
+            <div className="flex justify-center text-center">
+              <img
+                src={loader}
+                alt="loader component"
+                className="block text-center"
+              />
+            </div>
           ) : (
             <div>
               <div className="flex justify-start my-10 text-xl roboto-bold">
