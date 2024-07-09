@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { tick, loader, linkIcon, copy } from "../assets";
 import React from "react";
 import { useLazyGetSummarizedArticleQuery } from "../app/article.ts";
-import { data } from "../types/index.ts";
 type currentArticleType = {
   URL: string;
   generatedArticle: string;
@@ -28,10 +27,8 @@ const Model = () => {
       articleUrl: currentArticle.URL,
     };
     try {
-      const {
-        data: { summary },
-      } = await getSummarizedArticle(params);
-      currentArticle.generatedArticle = summary;
+      const { data } = await getSummarizedArticle(params);
+      currentArticle.generatedArticle = String(data?.summary);
       setIsArticleChanged(currentArticle.generatedArticle);
     } catch (e) {
       console.log(error);
